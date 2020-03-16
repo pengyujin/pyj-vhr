@@ -1,26 +1,24 @@
 package com.example.controller;
 
-import com.example.exception.MyException;
-import com.example.exception.MyExceptionType;
 import com.example.common.AjaxResponse;
 import com.example.service.HrService;
 import com.example.service.MenuService;
 import com.example.service.RedisService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @RestController
 @Slf4j
+@CacheConfig
 public class LoginController {
 
 
@@ -51,6 +49,7 @@ public class LoginController {
     }
 
     @GetMapping("/testMenu")
+    @Cacheable
     public AjaxResponse testMenu() {
         return AjaxResponse.success(menuService.getAllMenu());
     }
