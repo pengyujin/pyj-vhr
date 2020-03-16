@@ -4,7 +4,9 @@ import com.example.exception.MyException;
 import com.example.exception.MyExceptionType;
 import com.example.common.AjaxResponse;
 import com.example.service.HrService;
+import com.example.service.MenuService;
 import com.example.service.RedisService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,8 @@ public class LoginController {
     private RedisService redisService;
     @Autowired
     private HrService hrService;
+    @Autowired
+    private MenuService menuService;
 
 //    @Autowired
 //    @Qualifier("jwtUserDetailsService")
@@ -44,6 +48,11 @@ public class LoginController {
         ExecutorService service = Executors.newFixedThreadPool(10);
         return AjaxResponse.success("登陆成功");
 
+    }
+
+    @GetMapping("/testMenu")
+    public AjaxResponse testMenu() {
+        return AjaxResponse.success(menuService.getAllMenu());
     }
 
 

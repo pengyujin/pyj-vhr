@@ -67,7 +67,7 @@ public class WebExceptionHandler {
     public AjaxResponse exception(Exception e) {
         //TODO 将异常信息持久化,方便运维人员处理
         //没有被程序员发现,并转化为MyException的异常，都是其他异常或者未知异常
-        log.error("全局捕获");
+        log.error(e.getMessage());
         return AjaxResponse.error(new MyException(MyExceptionType.OTHER_ERROR, "未知异常"));
     }
 

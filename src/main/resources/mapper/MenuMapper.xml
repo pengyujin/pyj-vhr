@@ -13,6 +13,26 @@
         <result column="parentId" property="parentid" jdbcType="INTEGER"/>
         <result column="enabled" property="enabled" jdbcType="BIT"/>
     </resultMap>
+    <resultMap id="MenuMap" type="com.example.pojo.Menu">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="component" property="component" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="iconCls" property="iconcls" jdbcType="VARCHAR"/>
+        <result column="keepAlive" property="keepalive" jdbcType="BIT"/>
+        <result column="requireAuth" property="requireauth" jdbcType="BIT"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+
+        <collection property="roles" ofType="com.example.pojo.Role">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="nameZh" property="namezh" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="childMenu" ofType="com.example.pojo.Menu" select="getAllMenu"
+                    column="{parentId=id}"></collection>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -95,6 +115,23 @@
         <include refid="Base_Column_List"/>
         from menu
         where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!--自定义-->
+    <select id="getAllMenu" resultMap="MenuMap">
+        SELECT
+        m.id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
+        FROM
+        menu m
+        where 1=1
+        <choose>
+            <when test="parentId!=null">
+                and m.parentId = #{parentId}
+            </when>
+            <otherwise>
+                and m.parentId = '1'
+            </otherwise>
+        </choose>
+
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from menu

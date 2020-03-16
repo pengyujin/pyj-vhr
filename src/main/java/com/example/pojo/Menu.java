@@ -1,6 +1,7 @@
 package com.example.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Menu implements Serializable {
     private Integer id;
@@ -22,6 +23,26 @@ public class Menu implements Serializable {
     private Integer parentid;
 
     private Boolean enabled;
+
+    private List<Menu> childMenu;
+
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Menu> getChildMenu() {
+        return childMenu;
+    }
+
+    public void setChildMenu(List<Menu> childMenu) {
+        this.childMenu = childMenu;
+    }
 
     private static final long serialVersionUID = 1L;
 

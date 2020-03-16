@@ -28,4 +28,7 @@ public interface MenuMapper {
     int updateByPrimaryKeySelective(Menu record);
 
     int updateByPrimaryKey(Menu record);
+
+    //自定义mapper
+    List<Menu> getAllMenu();
 }
